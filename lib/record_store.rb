@@ -1,5 +1,5 @@
 class RecordStore
-  VERSION = "0.1.0"
+  VERSION = "0.2.0"
 
   class << self
     def put(record)
@@ -9,6 +9,13 @@ class RecordStore
 
     def dataset_name
       @dataset_name ||= name.sub(/Store$/,'').tableize.to_sym
+    end
+
+    def type_column_map(database)
+      @type_column_map ||= database.schema(dataset_name).each_with_object({}) do |(column,metadata),map|
+        map[metadata[:db_type]] ||= []
+        map[metadata[:db_type]] << column
+      end
     end
 
     def validations
@@ -39,6 +46,7 @@ class RecordStore
   end
 
   def put
+    typecast
     transform
     return { errors: 'no record provided' } if @record.blank?
     validate
@@ -68,6 +76,16 @@ class RecordStore
     @errors ||= []
   end
 
+  def typecast
+    if database.database_type == :postgres
+      Array(self.class.type_column_map(database)['json']).each do |json_column|
+        if @record[json_column]
+          @record[json_column] = Sequel.pg_json(@record[json_column])
+        end
+      end
+    end
+  end
+
   def transform
   end
 
@@ -82,7 +100,7 @@ class RecordStore
   end
 
   def insert
-    dataset.insert(@record.except(:errors))
+    @record[:id] = dataset.insert(@record.except(:errors))
   end
 
   def update
