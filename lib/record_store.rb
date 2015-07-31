@@ -82,10 +82,10 @@ class RecordStore
   end
 
   def insert
-    dataset.insert(@record)
+    dataset.insert(@record.except(:errors))
   end
 
   def update
-    dataset.where(id: @record[:id]).update(@record.except(:id))
+    dataset.where(id: @record[:id]).update(@record.except(:id, :errors))
   end
 end
