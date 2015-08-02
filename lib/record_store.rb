@@ -1,15 +1,28 @@
 class RecordStore
-  VERSION = "0.2.0"
+  VERSION = "0.3.0"
 
   class << self
-    def put(record)
-      new(record).put
+    def database
+      raise "You must setup your database"
     end
-    alias_method :<<, :put
 
     def dataset_name
       @dataset_name ||= name.sub(/Store$/,'').tableize.to_sym
     end
+
+    def dataset
+      database[dataset_name]
+    end
+
+    def get(id)
+      dataset.where(id: id).first
+    end
+    alias_method :[], :get
+
+    def put(record)
+      new(record).put
+    end
+    alias_method :<<, :put
 
     def type_column_map(database)
       @type_column_map ||= database.schema(dataset_name).each_with_object({}) do |(column,metadata),map|
@@ -65,11 +78,11 @@ class RecordStore
   end
 
   def database
-    raise "You must setup your database"
+    self.class.database
   end
 
   def dataset
-    database[self.class.dataset_name]
+    self.class.dataset
   end
 
   def errors

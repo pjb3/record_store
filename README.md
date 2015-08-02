@@ -24,7 +24,7 @@ If you have an application where you are working with records as hashes and you 
 
 ```ruby
 class Store < RecordStore
-  def database
+  def self.database
     DB
   end
 end
