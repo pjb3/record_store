@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mail@paulbarry.com"]
 
   spec.summary       = %q{Easily store records in your database with Sequel}
-  spec.homepage      = "http://github.com/pjb3/record_store"
+  spec.homepage      = "http://github.com/pjb3/sequel_record_store"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
