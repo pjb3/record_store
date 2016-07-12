@@ -1,8 +1,8 @@
 # coding: utf-8
 
 Gem::Specification.new do |spec|
-  spec.name          = "record_store"
-  spec.version       = "0.3.0"
+  spec.name          = "sequel_record_store"
+  spec.version       = "0.4.0"
   spec.authors       = ["Paul Barry"]
   spec.email         = ["mail@paulbarry.com"]
 

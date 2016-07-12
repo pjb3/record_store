@@ -1,5 +1,5 @@
-class RecordStore
-  VERSION = "0.3.0"
+class SequelRecordStore
+  VERSION = "0.4.0"
 
   class << self
     def database

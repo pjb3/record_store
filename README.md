@@ -7,7 +7,7 @@ Store records in your database using Sequel
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'record_store'
+gem 'sequel_record_store'
 ```
 
 And then execute:
@@ -20,10 +20,10 @@ Or install it yourself as:
 
 ## Usage
 
-If you have an application where you are working with records as hashes and you would like store them in your database using Sequel, this gem can help make that happen. To use Record Store, you should subclass the `RecordStore` class at least once in your application. If for example you already have a reference to a Sequel database stored in a constant called `DB`, then you would do something lke this:
+If you have an application where you are working with records as hashes and you would like store them in your database using Sequel, this gem can help make that happen. To use Record Store, you should subclass the `SequelRecordStore` class at least once in your application. If for example you already have a reference to a Sequel database stored in a constant called `DB`, then you would do something lke this:
 
 ```ruby
-class Store < RecordStore
+class Store < SequelRecordStore
   def self.database
     DB
   end
